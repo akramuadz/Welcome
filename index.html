@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio | Professional Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --neon-purple: #c724f1;
+            --neon-purple-light: #e39ff6;
+            --dark-bg: #0a0a0a;
+            --darker-bg: #050505;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-bg);
+            color: #f0f0f0;
+            scroll-behavior: smooth;
+        }
+        
+        .neon-text {
+            text-shadow: 0 0 5px var(--neon-purple), 0 0 10px var(--neon-purple);
+        }
+        
+        .neon-border {
+            box-shadow: 0 0 10px var(--neon-purple), 0 0 20px rgba(199, 36, 241, 0.5);
+        }
+        
+        .neon-hover:hover {
+            text-shadow: 0 0 8px var(--neon-purple), 0 0 15px var(--neon-purple);
+            transition: text-shadow 0.3s ease;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--darker-bg) 100%);
+        }
+        
+        .nav-link::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: var(--neon-purple);
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .btn-neon {
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn-neon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(199, 36, 241, 0.4), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+        
+        .btn-neon:hover::before {
+            left: 100%;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Dragon Ball Skills */
+        .dragon-ball {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ffeb3b, #f44336);
+            position: relative;
+            box-shadow: 0 0 10px rgba(244, 67, 54, 0.7);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .dragon-ball::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+        }
+        
+        .dragon-ball::after {
+            content: '★';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 20px;
+        }
+        
+        .dragon-ball:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 20px rgba(244, 67, 54, 0.9);
+        }
+        
+        .dragon-ball-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+            position: relative;
+        }
+        
+        .dragon-ball-skill {
+            position: absolute;
+            bottom: -30px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            white-space: nowrap;
+        }
+        
+        .dragon-ball:hover + .dragon-ball-skill {
+            opacity: 1;
+        }
+        
+        /* Timeline */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 3px;
+            background-color: var(--neon-purple);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1.5px;
+        }
+        
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--neon-purple);
+            border-radius: 50%;
+            top: 15px;
+            z-index: 1;
+        }
+        
+        .left {
+            left: 0;
+        }
+        
+        .right {
+            left: 50%;
+        }
+        
+        .left::after {
+            right: -10px;
+        }
+        
+        .right::after {
+            left: -10px;
+        }
+        
+        .timeline-content {
+            padding: 20px;
+            background-color: rgba(15, 15, 15, 0.7);
+            border-radius: 6px;
+            border-left: 3px solid var(--neon-purple);
+        }
+        
+        /* Project Bubbles */
+        .project-bubble {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(199, 36, 241, 0.2), rgba(199, 36, 241, 0.4));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .project-bubble:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(199, 36, 241, 0.6);
+        }
+        
+        .project-bubble-content {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        /* Rocket Animation */
+        .rocket {
+            position: relative;
+            transition: all 0.5s ease;
+        }
+        
+        .rocket-icon {
+            font-size: 24px;
+            color: var(--neon-purple);
+            transition: all 0.3s ease;
+        }
+        
+        .rocket:hover .rocket-icon {
+            transform: translateY(-20px);
+            color: #ffeb3b;
+        }
+        
+        .rocket::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon-purple), transparent);
+            transition: all 0.5s ease;
+        }
+        
+        .rocket:hover::after {
+            width: 100%;
+            height: 1px;
+            box-shadow: 0 0 10px var(--neon-purple);
+        }
+        
+        /* Section Animation */
+        .section-hidden {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+        
+        .section-show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="gradient-bg">
+    <!-- Navigation -->
+    <nav class="container mx-auto px-6 py-4 sticky top-0 z-50 bg-black bg-opacity-80 backdrop-blur-sm">
+        <div class="flex justify-between items-center">
+            <div class="text-2xl font-bold neon-text">
+                <span class="text-white">My</span><span class="text-[var(--neon-purple)]">Portfolio</span>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="text-white nav-link hover:text-[var(--neon-purple)] transition duration-300">Home</a>
+                <a href="#about" class="text-white nav-link hover:text-[var(--neon-purple)] transition duration-300">About</a>
+                <a href="#projects" class="text-white nav-link hover:text-[var(--neon-purple)] transition duration-300">Projects</a>
+                <a href="#contact" class="text-white nav-link hover:text-[var(--neon-purple)] transition duration-300">Contact</a>
+            </div>
+            <button class="md:hidden text-white focus:outline-none" id="mobile-menu-button">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden absolute top-16 right-6 bg-[#111] p-4 rounded-lg shadow-lg" id="mobile-menu">
+            <div class="flex flex-col space-y-4">
+                <a href="#home" class="text-white hover:text-[var(--neon-purple)] transition duration-300">Home</a>
+                <a href="#about" class="text-white hover:text-[var(--neon-purple)] transition duration-300">About</a>
+                <a href="#projects" class="text-white hover:text-[var(--neon-purple)] transition duration-300">Projects</a>
+                <a href="#contact" class="text-white hover:text-[var(--neon-purple)] transition duration-300">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="container mx-auto px-6 py-20 md:py-32 min-h-screen flex items-center section-hidden">
+        <div class="flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-12 md:mb-0">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6 neon-hover">
+                    Hi, I'm <span class="text-[var(--neon-purple)]">[Your Name]</span>
+                </h1>
+                <h2 class="text-2xl md:text-3xl font-semibold mb-4 text-gray-300">
+                    Professional <span class="text-[var(--neon-purple-light)]">[Your Profession]</span>
+                </h2>
+                <p class="text-lg text-gray-400 mb-8 leading-relaxed">
+                    I create innovative digital solutions with a focus on clean design, performance, and user experience. 
+                    Let's build something amazing together.
+                </p>
+                <div class="flex space-x-4">
+                    <a href="#projects" class="btn-neon px-8 py-3 bg-[var(--neon-purple)] text-black font-semibold rounded-full hover:bg-white transition duration-300">
+                        View My Work
+                    </a>
+                    <a href="#contact" class="btn-neon px-8 py-3 border-2 border-[var(--neon-purple)] text-[var(--neon-purple)] font-semibold rounded-full hover:bg-[var(--neon-purple)] hover:text-black transition duration-300">
+                        Contact Me
+                    </a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <div class="relative w-64 h-64 md:w-80 md:h-80 neon-border rounded-full overflow-hidden floating">
+                    <div class="absolute inset-0 bg-[#111] opacity-90"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <!-- Replace with your photo -->
+                        <div class="w-full h-full bg-[#222] flex items-center justify-center">
+                            <i class="fas fa-user text-[var(--neon-purple)] text-8xl"></i>
+                        </div>
+                    </div>
+                    <div class="absolute inset-0 rounded-full border-4 border-[var(--neon-purple)] opacity-20"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="container mx-auto px-6 py-20 section-hidden">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 neon-hover">
+                About <span class="text-[var(--neon-purple)]">Me</span>
+            </h2>
+            <p class="text-gray-400 max-w-2xl mx-auto">
+                Get to know more about my background, education, and skills.
+            </p>
+        </div>
+        
+        <div class="mb-20">
+            <h3 class="text-2xl font-semibold mb-6 text-[var(--neon-purple-light)]">Who Am I?</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <p class="text-gray-300 mb-4">
+                        I'm a passionate [Your Profession] with [X] years of experience in creating digital solutions. 
+                        My journey in technology began when I was [age] and I've been fascinated by the power of code ever since.
+                    </p>
+                    <p class="text-gray-300 mb-4">
+                        When I'm not coding, you can find me [your hobbies/interests]. I believe in continuous learning and 
+                        staying updated with the latest technologies and trends in the industry.
+                    </p>
+                    <p class="text-gray-300">
+                        My approach combines technical expertise with creative problem-solving to deliver solutions that 
+                        are not only functional but also provide exceptional user experiences.
+                    </p>
+                </div>
+                <div class="flex justify-center">
+                    <div class="relative w-64 h-64 neon-border rounded-lg overflow-hidden">
+                        <div class="absolute inset-0 bg-[#111] opacity-90"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <!-- Replace with your photo or illustration -->
+                            <i class="fas fa-code text-[var(--neon-purple)] text-8xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Education Timeline -->
+        <div class="mb-20">
+            <h3 class="text-2xl font-semibold mb-6 text-[var(--neon-purple-light)]">Academic History</h3>
+            <div class="timeline">
+                <!-- SD -->
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h4 class="font-bold">SD [Your Elementary School]</h4>
+                        <p class="text-gray-400 text-sm">2005 - 2011</p>
+                        <p class="text-gray-300 mt-2">Learned the fundamentals and discovered my passion for problem-solving.</p>
+                    </div>
+                </div>
+                
+                <!-- SMP -->
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <h4 class="font-bold">SMP [Your Junior High School]</h4>
+                        <p class="text-gray-400 text-sm">2011 - 2014</p>
+                        <p class="text-gray-300 mt-2">Developed interest in technology and computer science.</p>
+                    </div>
+                </div>
+                
+                <!-- SMA -->
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <h4 class="font-bold">SMA [Your Senior High School]</h4>
+                        <p class="text-gray-400 text-sm">2014 - 2017</p>
+                        <p class="text-gray-300 mt-2">Focused on science and mathematics, participated in computer-related competitions.</p>
+                    </div>
+                </div>
+                
+                <!-- University -->
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <h4 class="font-bold">[Your University]</h4>
+                        <p class="text-gray-400 text-sm">2017 - 2021</p>
+                        <p class="text-gray-300 mt-2">Bachelor's Degree in Computer Science. Specialized in [your specialization].</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Skills Section -->
+        <div>
+            <h3 class="text-2xl font-semibold mb-6 text-[var(--neon-purple-light)]">My Skills</h3>
+            <div class="flex flex-wrap justify-center">
+                <!-- Skill 1 -->
+                <div class="dragon-ball-container">
+                    <div class="dragon-ball"></div>
+                    <div class="dragon-ball-skill">Frontend Development</div>
+                </div>
+                
+                <!-- Skill 2 -->
+                <div class="dragon-ball-container">
+                    <div class="dragon-ball"></div>
+                    <div class="dragon-ball-skill">Backend Development</div>
+                </div>
+                
+                <!-- Skill 3 -->
+                <div class="dragon-ball-container">
+                    <div class="dragon-ball"></div>
+                    <div class="dragon-ball-skill">UI/UX Design</div>
+                </div>
+                
+                <!-- Skill 4 -->
+                <div class="dragon-ball-container">
+                    <div class="dragon-ball"></div>
+                    <div class="dragon-ball-skill">Database Management</div>
+                </div>
+                
+                <!-- Skill 5 -->
+                <div class="dragon-ball-container">
+                    <div class="dragon-ball"></div>
+                    <div class="dragon-ball-skill">Mobile Development</div>
+                </div>
+                
+                <!-- Skill 6 -->
+                <div class="dragon-ball-container">
+                    <div class="dragon-ball"></div>
+                    <div class="dragon-ball-skill">Cloud Computing</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="container mx-auto px-6 py-20 section-hidden">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 neon-hover">
+                My <span class="text-[var(--neon-purple)]">Projects</span>
+            </h2>
+            <p class="text-gray-400 max-w-2xl mx-auto">
+                Here are some of my recent projects and professional experiences.
+            </p>
+        </div>
+        
+        <div class="flex flex-wrap justify-center">
+            <!-- Project 1 -->
+            <div class="project-bubble floating">
+                <div class="project-bubble-content">
+                    <i class="fas fa-laptop-code text-4xl text-[var(--neon-purple)] mb-2"></i>
+                    <h3 class="font-bold">E-commerce Website</h3>
+                    <p class="text-sm text-gray-300">Built with React & Node.js</p>
+                </div>
+            </div>
+            
+            <!-- Project 2 -->
+            <div class="project-bubble floating" style="animation-delay: 0.5s;">
+                <div class="project-bubble-content">
+                    <i class="fas fa-mobile-alt text-4xl text-[var(--neon-purple)] mb-2"></i>
+                    <h3 class="font-bold">Fitness App</h3>
+                    <p class="text-sm text-gray-300">Flutter & Firebase</p>
+                </div>
+            </div>
+            
+            <!-- Project 3 -->
+            <div class="project-bubble floating" style="animation-delay: 1s;">
+                <div class="project-bubble-content">
+                    <i class="fas fa-chart-line text-4xl text-[var(--neon-purple)] mb-2"></i>
+                    <h3 class="font-bold">Analytics Dashboard</h3>
+                    <p class="text-sm text-gray-300">Vue.js & D3.js</p>
+                </div>
+            </div>
+            
+            <!-- Project 4 -->
+            <div class="project-bubble floating" style="animation-delay: 1.5s;">
+                <div class="project-bubble-content">
+                    <i class="fas fa-robot text-4xl text-[var(--neon-purple)] mb-2"></i>
+                    <h3 class="font-bold">AI Chatbot</h3>
+                    <p class="text-sm text-gray-300">Python & TensorFlow</p>
+                </div>
+            </div>
+            
+            <!-- Project 5 -->
+            <div class="project-bubble floating" style="animation-delay: 2s;">
+                <div class="project-bubble-content">
+                    <i class="fas fa-gamepad text-4xl text-[var(--neon-purple)] mb-2"></i>
+                    <h3 class="font-bold">Mobile Game</h3>
+                    <p class="text-sm text-gray-300">Unity & C#</p>
+                </div>
+            </div>
+            
+            <!-- Project 6 -->
+            <div class="project-bubble floating" style="animation-delay: 2.5s;">
+                <div class="project-bubble-content">
+                    <i class="fas fa-building text-4xl text-[var(--neon-purple)] mb-2"></i>
+                    <h3 class="font-bold">Company Website</h3>
+                    <p class="text-sm text-gray-300">WordPress Custom Theme</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-16">
+            <button class="px-8 py-3 border-2 border-[var(--neon-purple)] text-[var(--neon-purple)] font-semibold rounded-full hover:bg-[var(--neon-purple)] hover:text-black transition duration-300">
+                View All Projects
+            </button>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="container mx-auto px-6 py-20 section-hidden">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 neon-hover">
+                Get In <span class="text-[var(--neon-purple)]">Touch</span>
+            </h2>
+            <p class="text-gray-400 max-w-2xl mx-auto">
+                Have a project in mind or want to collaborate? Feel free to reach out!
+            </p>
+        </div>
+        
+        <div class="max-w-4xl mx-auto bg-[#111] rounded-xl p-8 neon-border">
+            <form class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="name" class="block text-gray-300 mb-2">Your Name</label>
+                    <input type="text" id="name" class="w-full px-4 py-2 bg-[#222] border border-[#333] rounded-lg focus:outline-none focus:border-[var(--neon-purple)] focus:ring-1 focus:ring-[var(--neon-purple)]">
+                </div>
+                <div>
+                    <label for="email" class="block text-gray-300 mb-2">Your Email</label>
+                    <input type="email" id="email" class="w-full px-4 py-2 bg-[#222] border border-[#333] rounded-lg focus:outline-none focus:border-[var(--neon-purple)] focus:ring-1 focus:ring-[var(--neon-purple)]">
+                </div>
+                <div class="md:col-span-2">
+                    <label for="subject" class="block text-gray-300 mb-2">Subject</label>
+                    <input type="text" id="subject" class="w-full px-4 py-2 bg-[#222] border border-[#333] rounded-lg focus:outline-none focus:border-[var(--neon-purple)] focus:ring-1 focus:ring-[var(--neon-purple)]">
+                </div>
+                <div class="md:col-span-2">
+                    <label for="message" class="block text-gray-300 mb-2">Message</label>
+                    <textarea id="message" rows="5" class="w-full px-4 py-2 bg-[#222] border border-[#333] rounded-lg focus:outline-none focus:border-[var(--neon-purple)] focus:ring-1 focus:ring-[var(--neon-purple)]"></textarea>
+                </div>
+                <div class="md:col-span-2 text-center">
+                    <button type="submit" class="btn-neon px-8 py-3 bg-[var(--neon-purple)] text-black font-semibold rounded-full hover:bg-white transition duration-300 flex items-center justify-center mx-auto">
+                        <span class="rocket">
+                            <i class="fas fa-paper-plane rocket-icon mr-2"></i>
+                        </span>
+                        Send Message
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold neon-text mb-4">
+                        <span class="text-white">My</span><span class="text-[var(--neon-purple)]">Portfolio</span>
+                    </h3>
+                    <p class="text-gray-400">
+                        Creating innovative digital solutions with a modern touch.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-gray-400 hover:text-[var(--neon-purple)] transition duration-300">Home</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-[var(--neon-purple)] transition duration-300">About</a></li>
+                        <li><a href="#projects" class="text-gray-400 hover:text-[var(--neon-purple)] transition duration-300">Projects</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-[var(--neon-purple)] transition duration-300">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold text-white mb-4">Contact Info</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-[var(--neon-purple)] mt-1 mr-3"></i>
+                            <span>[Your Address]</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt text-[var(--neon-purple)] mr-3"></i>
+                            <span>[Your Phone Number]</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope text-[var(--neon-purple)] mr-3"></i>
+                            <span>[Your Email]</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 mb-4 md:mb-0">
+                    &copy; 2023 My Portfolio. All rights reserved.
+                </p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-[var(--neon-purple)] transition duration-300">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-[var(--neon-purple)] transition duration-300">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-[var(--neon-purple)] transition duration-300">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-[var(--neon-purple)] transition duration-300">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
+        
+        // Scroll animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('section-show');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+        
+        document.querySelectorAll('.section-hidden').forEach(section => {
+            observer.observe(section);
+        });
+        
+        // Smooth scrolling for all links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Rocket animation enhancement
+        document.querySelectorAll('.rocket').forEach(rocket => {
+            rocket.addEventListener('mouseenter', function() {
+                const icon = this.querySelector('.rocket-icon');
+                icon.style.transform = 'translateY(-20px)';
+                icon.style.color = '#ffeb3b';
+                
+                // Create stars animation
+                for (let i = 0; i < 5; i++) {
+                    const star = document.createElement('div');
+                    star.innerHTML = '✦';
+                    star.className = 'absolute text-yellow-300 text-xs opacity-0';
+                    star.style.left = `${Math.random() * 100}%`;
+                    star.style.bottom = '0';
+                    this.appendChild(star);
+                    
+                    // Animate star
+                    setTimeout(() => {
+                        star.style.opacity = '1';
+                        star.style.transform = 'translateY(-30px)';
+                        star.style.transition = 'all 0.5s ease-out';
+                        
+                        setTimeout(() => {
+                            star.style.opacity = '0';
+                            setTimeout(() => {
+                                star.remove();
+                            }, 500);
+                        }, 500);
+                    }, i * 100);
+                }
+            });
+            
+            rocket.addEventListener('mouseleave', function() {
+                const icon = this.querySelector('.rocket-icon');
+                icon.style.transform = 'translateY(0)';
+                icon.style.color = 'var(--neon-purple)';
+            });
+        });
+    </script>
+</body>
+</html>
